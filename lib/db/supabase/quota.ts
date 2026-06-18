@@ -32,3 +32,12 @@ export function isQuotaExceededError(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
   return message.includes("exceeded your current quota") || message.includes("RESOURCE_EXHAUSTED");
 }
+
+export function isModelOverloadedError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error);
+  return (
+    message.includes("high demand") ||
+    message.includes("UNAVAILABLE") ||
+    message.includes("overloaded")
+  );
+}

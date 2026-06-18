@@ -45,6 +45,7 @@ export async function runAgent(messages: ModelMessage[]): Promise<AgentResult> {
       messages: conversation,
       tools,
       stopWhen: stepCountIs(1),
+      maxRetries: 1,
     });
 
     totalTokens += result.usage.totalTokens ?? 0;
@@ -79,6 +80,7 @@ export async function runAgent(messages: ModelMessage[]): Promise<AgentResult> {
     model: geminiModel,
     system: ASSISTANT_SYSTEM_PROMPT,
     messages: conversation,
+    maxRetries: 1,
   });
   totalTokens += fallback.usage.totalTokens ?? 0;
   steps.push({

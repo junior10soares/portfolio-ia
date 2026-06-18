@@ -3,7 +3,11 @@ import { runAgent } from "@/lib/ai/agent/run-agent";
 import { insertAgentTrace } from "@/lib/db/supabase/traces";
 import { META_MARKER } from "@/lib/ai/chat-protocol";
 import { checkRateLimit, getClientIp, hashIp } from "@/lib/db/supabase/rate-limit";
-import { getQuotaStatus, isQuotaExceededError } from "@/lib/db/supabase/quota";
+import {
+  getQuotaStatus,
+  isModelOverloadedError,
+  isQuotaExceededError,
+} from "@/lib/db/supabase/quota";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -11,6 +15,8 @@ export const maxDuration = 30;
 const MAX_MESSAGE_LENGTH = 2000;
 const QUOTA_MESSAGE =
   "A cota gratuita diária do Gemini para este site foi atingida. Volte amanhã ou explore o Laboratório IA e a página de Arquitetura enquanto isso.";
+const OVERLOADED_MESSAGE =
+  "O modelo do Gemini está com alta demanda no momento (isso é raro e passa rápido, é uma instabilidade do free tier). Tente novamente em alguns segundos.";
 
 type ChatRequestBody = {
   sessionId: string;
@@ -58,6 +64,9 @@ export async function POST(req: Request) {
   } catch (error) {
     if (isQuotaExceededError(error)) {
       return new Response(QUOTA_MESSAGE, { status: 503 });
+    }
+    if (isModelOverloadedError(error)) {
+      return new Response(OVERLOADED_MESSAGE, { status: 503 });
     }
     console.error("Falha no agente:", error);
     return new Response(
