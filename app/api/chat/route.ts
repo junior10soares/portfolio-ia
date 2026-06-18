@@ -6,6 +6,7 @@ import { checkRateLimit, getClientIp, hashIp } from "@/lib/db/supabase/rate-limi
 import { getQuotaStatus, isQuotaExceededError } from "@/lib/db/supabase/quota";
 
 export const runtime = "nodejs";
+export const maxDuration = 30;
 
 const MAX_MESSAGE_LENGTH = 2000;
 const QUOTA_MESSAGE =

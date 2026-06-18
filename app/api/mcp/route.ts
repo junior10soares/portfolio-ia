@@ -2,6 +2,7 @@ import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/
 import { createMcpServer } from "@/lib/ai/mcp/server";
 
 export const runtime = "nodejs";
+export const maxDuration = 30;
 
 // Modo stateless: cada requisição cria seu próprio par server+transport, pois o
 // runtime serverless não garante que o mesmo processo atenda a próxima chamada.

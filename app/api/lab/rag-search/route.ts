@@ -2,6 +2,7 @@ import { ragSearch } from "@/lib/ai/rag/retrieve";
 import { checkRateLimit, getClientIp, hashIp } from "@/lib/db/supabase/rate-limit";
 
 export const runtime = "nodejs";
+export const maxDuration = 30;
 
 const MAX_QUERY_LENGTH = 300;
 

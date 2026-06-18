@@ -3,6 +3,7 @@ import { embedText } from "@/lib/ai/embeddings/local-embedder";
 import { checkRateLimit, getClientIp, hashIp } from "@/lib/db/supabase/rate-limit";
 
 export const runtime = "nodejs";
+export const maxDuration = 30;
 
 const MAX_LENGTH = 300;
 
