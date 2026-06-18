@@ -1,0 +1,41 @@
+{
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "index-content": "tsx scripts/index-content.ts"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.83",
+    "@huggingface/transformers": "^4.2.0",
+    "@icons-pack/react-simple-icons": "^13.13.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "ai": "^6.0.207",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^1.20.0",
+    "next": "16.2.9",
+    "next-mdx-remote": "^6.0.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/ws": "^8.18.1",
+    "dotenv": "^17.4.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.9",
+    "tailwindcss": "^4",
+    "tsx": "^4.22.4",
+    "typescript": "^5",
+    "ws": "^8.21.0"
+  }
+}

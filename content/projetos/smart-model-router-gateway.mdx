@@ -1,0 +1,14 @@
+---
+title: "Smart Model Router Gateway"
+slug: "smart-model-router-gateway"
+summary: "Gateway HTTP em Fastify que roteia chamadas de chat entre múltiplos modelos via OpenRouter."
+stack: ["Node.js", "TypeScript", "Fastify", "OpenRouter SDK"]
+category: "Inteligência Artificial"
+image: "/projects/smart-model-router-gateway.png"
+status: "ativo"
+order: 10
+---
+
+Serviço independente (Fastify + TypeScript) que expõe um endpoint `POST /chat` e roteia a requisição para diferentes modelos via OpenRouter, escolhendo dinamicamente com base em throughput e custo.
+
+**Por que não é a base do backend de IA deste portfólio:** ao desenhar a arquitetura do site, avaliei reaproveitar este gateway, mas decidi conscientemente não fazer isso — o portfólio precisa de streaming, tool calling, MCP e RAG nativos no mesmo runtime do frontend (Next.js), e manter dois serviços separados sem necessidade técnica real só adicionaria custo e complexidade operacional. Este projeto continua de pé como peça independente, focada em roteamento multi-modelo.
