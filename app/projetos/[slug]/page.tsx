@@ -65,7 +65,16 @@ export default async function ProjectDetailPage({
         </div>
       </div>
 
-      {cover && (
+      {project.frontmatter.videoFile ? (
+        <video
+          controls
+          poster={project.frontmatter.image}
+          className="mt-6 h-56 w-full rounded-2xl border border-border object-cover sm:h-72"
+        >
+          <source src={project.frontmatter.videoFile} type="video/mp4" />
+        </video>
+      ) : (
+        cover && (
         project.frontmatter.videoUrl ? (
           <Link
             href={project.frontmatter.videoUrl}
@@ -99,7 +108,7 @@ export default async function ProjectDetailPage({
             />
           </div>
         )
-      )}
+      ))}
 
       <ul className="mt-4 flex flex-wrap gap-2">
         {project.frontmatter.stack.map((tech) => (

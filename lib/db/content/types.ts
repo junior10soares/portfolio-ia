@@ -33,6 +33,7 @@ export type ProjectFrontmatter = {
   repoUrl?: string;
   liveUrl?: string;
   videoUrl?: string;
+  videoFile?: string;
   image?: string;
   status: "ativo" | "arquivado" | "experimental";
   featured?: boolean;

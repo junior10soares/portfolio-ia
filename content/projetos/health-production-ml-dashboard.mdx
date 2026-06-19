@@ -1,0 +1,24 @@
+---
+title: "Painel de Saúde de Modelo de ML em Produção"
+slug: "health-production-ml-dashboard"
+summary: "Ciclo completo de um modelo de ML em produção: treinamento, deploy, monitoramento de drift e resposta automática — tudo num único painel ao vivo."
+stack: ["Next.js", "TypeScript", "Node.js", "Express", "Transformers.js", "PostgreSQL", "Supabase"]
+category: "MLOps & Data"
+repoUrl: "https://github.com/junior10soares/health-production-ml-dashboard"
+videoFile: "/videos/health-production-ml-dashboard.mp4"
+image: "/projects/health-production-ml-dashboard.png"
+status: "ativo"
+featured: true
+order: 5
+---
+
+A maioria dos projetos de ML para portfólio para no deploy de uma API de inferência. Este fecha o ciclo: treina um classificador de sentimento, serve ele via API, monitora continuamente se o tráfego real está se afastando do que o modelo aprendeu, e reage automaticamente quando isso acontece — uma versão em miniatura do que equipes de MLOps fazem em produção.
+
+**Como funciona:**
+
+1. **Treinamento** — um classificador de sentimento (regressão logística implementada à mão em JavaScript, sem bibliotecas de ML) é treinado sobre embeddings de frases em português, gerados localmente com `@xenova/transformers` (`Xenova/all-MiniLM-L6-v2`), sem nenhuma chamada a API paga.
+2. **Deploy** — uma API Express serve o modelo: recebe texto, retorna sentimento e um score de drift (distância coseno até o centróide de referência do treino).
+3. **Monitoramento de drift** — uma janela móvel das últimas distâncias é comparada contra um limiar estatístico (`média + 2.5×desvio padrão`). Quando a média sustentada ultrapassa o limiar, um alerta visual dispara no painel.
+4. **Resposta automática** — o sistema dispara uma reindexação simulada: desloca o centróide de referência em direção ao tráfego recente, reseta o alerta e registra o evento. É uma simulação de re-baseline, não um retreino completo dos pesos (não há rótulos confiáveis para tráfego real não supervisionado) — escolha deliberada para não confundir a demonstração com algo que ela não é.
+
+Stack 100% gratuita: Transformers.js elimina qualquer custo de inferência, Postgres no Supabase free tier substitui SQLite para sobreviver a redeploys, e o frontend em Next.js faz polling simples em vez de WebSockets — mais robusto em hosts free-tier com hibernação.
