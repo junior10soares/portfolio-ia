@@ -24,7 +24,12 @@ export type ProjectFrontmatter = {
   slug: string;
   summary: string;
   stack: string[];
-  category: "Inteligência Artificial" | "Web" | "Automação" | "Data";
+  category:
+    | "Inteligência Artificial"
+    | "Agentes & MCP"
+    | "Web"
+    | "Automação"
+    | "MLOps & Data";
   repoUrl?: string;
   liveUrl?: string;
   videoUrl?: string;

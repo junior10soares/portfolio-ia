@@ -4,7 +4,14 @@ import { useState } from "react";
 import { ProjectCard } from "@/components/project-card";
 import type { ProjectFrontmatter } from "@/lib/db/content";
 
-const CATEGORIES = ["Todos", "Inteligência Artificial", "Web", "Automação", "Data"] as const;
+const CATEGORIES = [
+  "Todos",
+  "Inteligência Artificial",
+  "Agentes & MCP",
+  "Web",
+  "Automação",
+  "MLOps & Data",
+] as const;
 
 export function ProjectFilter({
   projects,
