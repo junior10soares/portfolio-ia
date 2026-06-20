@@ -1,0 +1,25 @@
+---
+title: "Digital Twin Cognitivo"
+slug: "digital-twin-cognitivo"
+summary: "Um cérebro 3D flutuante que reage em tempo real a expressões, voz, tempo de resposta e padrões de navegação capturados no navegador."
+stack: ["Next.js", "TypeScript", "React Three Fiber", "MediaPipe", "Zustand", "IndexedDB"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/digital-twin-cognitivo"
+liveUrl: "https://digital-twin-cognitivo.vercel.app"
+videoFile: "/videos/digital-twin-cognitivo.mp4"
+image: "/projects/digital-twin-cognitivo.png"
+status: "ativo"
+featured: true
+order: 4
+---
+
+Um experimento visual: abrir a aplicação cria uma representação 3D viva da sua "mente", construída a partir de sinais capturados ao vivo no navegador — expressões faciais e olhar (MediaPipe Face Landmarker), voz (Web Audio API), tempo de resposta e padrões de navegação (eventos DOM nativos).
+
+**Como funciona:**
+
+1. **Captura de sinais** — câmera e microfone são opcionais e pedidos com consentimento explícito; tudo é processado 100% no navegador (WASM), nenhum frame ou áudio sai do dispositivo. Sem câmera/mic, um modo demo simula os sinais para a cena continuar reagindo.
+2. **Motor do mapa cognitivo** — os sinais brutos são combinados por heurísticas com pesos (não um modelo clínico) em métricas de foco, engajamento, humor e uma hipótese ilustrativa de estilo de interação (visual/auditivo/cinestésico).
+3. **Cena reativa** — um cérebro procedural (icosahedron + ruído simplex para simular dobras corticais) e uma rede neural de partículas, construídos com React Three Fiber, têm cor, brilho e velocidade de rotação interpolados em tempo real a partir do mapa cognitivo.
+4. **Evolução entre sessões** — cada sessão é resumida e salva no IndexedDB; a média histórica vira um "piso" para a próxima visita, então o gêmeo cognitivo nunca volta a zero — e um painel de histórico mostra a evolução do foco médio sessão a sessão.
+
+Projeto 100% client-side e gratuito: sem backend próprio, sem API paga, deploy na Vercel free tier. As métricas são deliberadamente heurísticas e ilustrativas — a proposta é a experiência visual e a narrativa de produto, não validação científica.
