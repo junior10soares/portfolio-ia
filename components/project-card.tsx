@@ -11,17 +11,18 @@ export function ProjectCard({
 }) {
   const videoThumbnail = project.videoUrl ? getYoutubeThumbnail(project.videoUrl) : null;
   const cover = project.image ?? videoThumbnail;
+  const videoHref = project.videoUrl ?? project.videoFile;
 
   return (
     <article className="group overflow-hidden rounded-2xl border border-border bg-bg-elevated transition-[transform,border-color] duration-200 ease-out hover:-translate-y-1 hover:border-accent/60">
       {cover ? (
-        project.videoUrl ? (
+        videoHref ? (
           <Link
-            href={project.videoUrl}
+            href={videoHref}
             target="_blank"
             rel="noopener noreferrer"
             className="relative block h-32 w-full overflow-hidden"
-            aria-label={`Ver vídeo de ${project.title} no YouTube`}
+            aria-label={`Ver vídeo de ${project.title}`}
           >
             <Image
               src={cover}
@@ -79,9 +80,9 @@ export function ProjectCard({
           >
             Ver detalhes
           </Link>
-          {project.videoUrl && (
+          {videoHref && (
             <Link
-              href={project.videoUrl}
+              href={videoHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 text-muted transition-colors duration-200 group-hover:text-fg"
