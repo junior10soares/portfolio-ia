@@ -1,0 +1,25 @@
+---
+title: "AI Software Company"
+slug: "ai-software-company"
+summary: "Uma empresa de software inteira operada por IA: descreva o sistema que quer e veja uma equipe de 6 agentes especialistas entregar requisitos, arquitetura, modelo de dados, UX, custos e riscos."
+stack: ["Next.js", "TypeScript", "Groq (Llama 3.3 70B)", "Tailwind CSS"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/ai-software-company"
+liveUrl: "https://ai-software-company-peach.vercel.app"
+videoFile: "/videos/ai-software-company.mp4"
+image: "/projects/ai-software-company.png"
+status: "ativo"
+featured: true
+order: 3
+---
+
+Em vez de conversar com um chatbot, o usuário descreve o sistema que quer construir — "quero um sistema de gestão de clínicas" — e vê uma equipe virtual de 6 agentes especialistas trabalhar em sequência até entregar requisitos, arquitetura, modelo de dados, UX, custos e riscos do projeto.
+
+**Como funciona:**
+
+1. **Orquestrador sequencial, código próprio** — sem framework de orquestração de agentes (LangGraph, CrewAI etc.); a ordem de execução, o encadeamento de contexto e a montagem do prompt de cada agente são implementação própria.
+2. **Contexto acumulado entre agentes** — cada agente (Product Manager → Architect → Database → UX/UI → Business → QA) recebe o pedido original do usuário **mais** tudo que os agentes anteriores já produziram, então a arquitetura já leva em conta os requisitos levantados, o modelo de dados já leva em conta a arquitetura, e assim por diante.
+3. **Personas centralizadas** — cada agente tem seu próprio system prompt, registrado num único arquivo, o que facilita ajustar o tom e o foco de cada papel sem espalhar lógica pelo código.
+4. **Provedor de LLM desacoplado** — toda chamada ao modelo passa por uma função única; o plano original previa Google Gemini, mas a chave de free tier retornou quota zero (restrição de conta Workspace), então o projeto trocou para Groq (Llama 3.3 70B) sem tocar no resto do código, só nesse ponto de acesso.
+
+Pipeline 100% gratuito: free tier da Groq para as 6 chamadas sequenciais ao modelo, deploy serverless na Vercel. O próximo passo é status em tempo real por agente via Server-Sent Events — hoje os 6 cards mudam de status juntos porque o resultado só chega no fim do pipeline inteiro.
