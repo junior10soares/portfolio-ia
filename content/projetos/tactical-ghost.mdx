@@ -1,0 +1,25 @@
+---
+title: "Tactical Ghost"
+slug: "tactical-ghost"
+summary: "Converte descrições de jogadas de futebol em português (texto ou voz) em animações táticas 2D com IA — fotos reais, SFX e narração de locutor."
+stack: ["Next.js", "TypeScript", "LangGraph", "Groq (Llama 3.3 70B + Whisper)", "ElevenLabs", "Turso"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/tactical-ghost"
+videoFile: "/videos/tactical-ghost.mp4"
+image: "/projects/tactical-ghost.png"
+status: "ativo"
+featured: true
+order: 2
+---
+
+Descreva uma jogada em português — "Vinicius arrancou pela esquerda, driblou dois e cruzou para Richarlison" — e veja a IA interpretar o raciocínio espacial, posicionar os jogadores reais da seleção brasileira no campo e animar cada passo em tempo real.
+
+**Como funciona:**
+
+1. **Entrada por texto ou voz** — o usuário digita a jogada ou grava pelo microfone; o áudio é transcrito via Groq Whisper-large-v3 antes de seguir para a análise.
+2. **Raciocínio espacial via LLM** — o Groq (Llama 3.3 70B) não usa coordenadas pré-definidas: ele lê a descrição livre e devolve um JSON estruturado com posições x/y passo a passo, tipo de jogada, eficácia e gatilhos de efeitos sonoros, validado por schema (Zod) antes de animar.
+3. **Orquestração com LangGraph** — todo o pipeline (transcrever → analisar → narrar → persistir) é modelado como um grafo com estado tipado entre nós, traceado no LangSmith.
+4. **Narração e SFX** — a análise gerada pela IA é sintetizada em áudio por um locutor esportivo (ElevenLabs), enquanto a Web Audio API dispara efeitos sonoros (chute, apito, torcida) no milissegundo exato de cada ação.
+5. **Modo "Desafio do Técnico"** — um quebra-cabeça tático: a IA posiciona uma defesa retrancada e avalia se a jogada descrita pelo usuário consegue romper a marcação.
+
+Projeto com stack 100% gratuita: Groq (LLM + Whisper) e ElevenLabs (voz premade) no plano Free, Turso para histórico e deploy serverless na Vercel — sem custo de operação.
