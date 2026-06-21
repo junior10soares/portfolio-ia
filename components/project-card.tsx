@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Sparkles, PlayCircle } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Sparkles, PlayCircle } from "lucide-react";
 import type { ProjectFrontmatter } from "@/lib/db/content";
 import { getYoutubeThumbnail } from "@/lib/youtube";
 
@@ -80,6 +80,17 @@ export function ProjectCard({
           >
             Ver detalhes
           </Link>
+          {project.liveUrl && (
+            <Link
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-muted transition-colors duration-200 group-hover:text-fg"
+            >
+              <ExternalLink size={14} />
+              Acessar
+            </Link>
+          )}
           {videoHref && (
             <Link
               href={videoHref}

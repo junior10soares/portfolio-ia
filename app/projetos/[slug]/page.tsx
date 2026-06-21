@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { ArrowLeft, ArrowUpRight, PlayCircle } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ExternalLink, PlayCircle } from "lucide-react";
 import { Container } from "@/components/container";
 import { getProject, getProjects } from "@/lib/db/content";
 import { getYoutubeThumbnail } from "@/lib/youtube";
@@ -40,6 +40,17 @@ export default async function ProjectDetailPage({
           {project.frontmatter.title}
         </h1>
         <div className="flex shrink-0 gap-2">
+          {project.frontmatter.liveUrl && (
+            <Link
+              href={project.frontmatter.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 rounded-full bg-accent px-4 py-2 text-sm text-bg transition-opacity duration-200 hover:opacity-90"
+            >
+              <ExternalLink size={14} />
+              Acessar
+            </Link>
+          )}
           {project.frontmatter.videoUrl && (
             <Link
               href={project.frontmatter.videoUrl}
