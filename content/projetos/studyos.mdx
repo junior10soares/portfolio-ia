@@ -1,0 +1,25 @@
+---
+title: "StudyOS"
+slug: "studyos"
+summary: "Plataforma de estudos com IA: planos de estudo, quiz, redação, flashcards e coach gerados por Claude/Gemini, com salas colaborativas em tempo real."
+stack: ["Next.js", "TypeScript", "Supabase", "Claude", "Gemini", "Chart.js"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/studyos"
+liveUrl: "https://studyos-azure-tau.vercel.app"
+videoFile: "/videos/studyos.mp4"
+image: "/projects/studyos.png"
+status: "ativo"
+featured: true
+order: 24
+---
+
+Plataforma web de estudos com cinco fluxos de IA generativa diferentes: um planner que monta cronograma semanal a partir das matérias e da data da prova, um gerador de quiz com correção automática, um corretor de redação nas 5 competências do ENEM, flashcards com revisão espaçada (algoritmo SM-2) e um coach de chat que conhece o histórico de estudos do usuário.
+
+**Como funciona:**
+
+1. **Provedor de IA plugável** — Claude (Anthropic) e Gemini (Google) ficam atrás da mesma interface de streaming em `lib/ai.ts`, trocáveis por uma única variável de ambiente. Em produção roda no free tier do Gemini; Claude fica disponível para quando a qualidade da geração compensa o custo.
+2. **Dados reais, não mock** — Supabase com Row Level Security isola os dados de cada usuário a nível de banco; um schema Postgres dedicado permite compartilhar um único projeto Supabase com outros apps do portfólio sem conflito de nomes.
+3. **Tempo real** — salas colaborativas usam Supabase Realtime (Postgres Changes) para sincronizar mensagens entre usuários sem polling.
+4. **Estado que sobrevive à navegação** — o timer Pomodoro vive num Context Provider no layout da área autenticada, então continua contando ao trocar de página, só parando quando o usuário decide ou fecha a aba.
+
+Projeto construído e depurado de ponta a ponta com o Claude Code: da modelagem do banco à migração entre provedores de IA, passando por uma sessão inteira de debugging de ambiente (uma variável `ANTHROPIC_API_KEY` do próprio sistema estava silenciosamente sobrescrevendo a chave do projeto) até a gravação automatizada da demo com Playwright.
