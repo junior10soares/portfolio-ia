@@ -1,0 +1,25 @@
+---
+title: "MovieAI — Recomendação de Filmes"
+slug: "movieai-recomendacao"
+summary: "Sistema de recomendação de filmes com ML (conteúdo + colaborativo), busca conversacional via Gemini e pôsteres reais via TMDB."
+stack: ["Python", "FastAPI", "PostgreSQL", "scikit-learn", "React", "TypeScript", "Gemini API"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/movieai-recomendacao"
+videoFile: "/videos/movieai-recomendacao.mp4"
+image: "/projects/movieai-recomendacao.png"
+status: "ativo"
+featured: true
+order: 6
+---
+
+Um sistema de recomendação de filmes ponta a ponta: do ETL do dataset MovieLens até modelos de machine learning, API e dashboard, com busca por linguagem natural via LLM.
+
+**Como funciona:**
+
+1. **ETL** — os CSVs do MovieLens (filmes, avaliações, tags) são carregados num PostgreSQL, com índices GIN para busca por título e gênero.
+2. **Recomendação por conteúdo** — TF-IDF sobre gêneros e tags de cada filme, com k-NN por similaridade de cosseno.
+3. **Recomendação colaborativa** — fatoração de matriz (SVD) treinada sobre o histórico de avaliações dos usuários; quem não está na base de treino (cold start) recebe um fallback automático por popularidade.
+4. **Busca conversacional** — descrever em linguagem natural o que quer assistir (ex: "um filme de ação dos anos 90, não muito longo") aciona o Gemini, que extrai filtros estruturados (gênero, período, critério de ordenação) e devolve direto para o filtro SQL.
+5. **Pôsteres reais** — enriquecidos via TMDB a partir do `tmdb_id` que já vem no próprio dataset.
+
+Toda a stack roda em Docker Compose (PostgreSQL, API, frontend) e usa apenas tiers gratuitos de IA (Gemini) e dados (TMDB) — sem custo de infraestrutura além do próprio ambiente local.
