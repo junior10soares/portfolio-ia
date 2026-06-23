@@ -1,0 +1,25 @@
+---
+title: "Agente de Licitações PNCP"
+slug: "agente-licitacoes-pncp"
+summary: "Monitora o Portal Nacional de Contratações Públicas, extrai dados de editais em PDF com IA e exibe tudo em tempo real — com um agente autônomo LangGraph que busca, pontua e reporta oportunidades por objetivo em linguagem natural."
+stack: ["FastAPI", "Python", "Next.js", "TypeScript", "LangGraph", "Groq (Llama 3.1)", "SQLite", "Server-Sent Events"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/agente-licitacoes-pncp"
+videoFile: "/videos/agente-licitacoes-pncp.mp4"
+image: "/projects/agente-licitacoes-pncp.png"
+status: "ativo"
+featured: true
+order: 7
+---
+
+Um agente que monitora o PNCP (Portal Nacional de Contratações Públicas) em tempo real, baixa os editais em PDF, extrai dados estruturados com IA e exibe os resultados ao vivo — além de um agente autônomo que recebe um objetivo em linguagem natural e sai sozinho atrás das oportunidades certas.
+
+**Como funciona:**
+
+1. **Coleta via API pública do PNCP** — sem scraping de DOM: o backend fala direto com a API oficial do PNCP (httpx), agendado em ciclos via APScheduler.
+2. **Extração estruturada por IA** — cada edital baixado é lido em chunks pelo Groq (Llama 3.1), que devolve objeto, órgão, CNPJ, valor estimado, prazo e segmento; editais escaneados caem automaticamente para OCR (Tesseract).
+3. **Feed em tempo real** — cada licitação processada é publicada via Server-Sent Events e aparece no frontend (Next.js) sem precisar recarregar a página.
+4. **Agente autônomo (LangGraph)** — descreva um objetivo (*"licitações de TI acima de R$500 mil"*) e o agente planeja termos de busca por tool calling, busca no PNCP, analisa e pontua a relevância de cada oportunidade (0–100 com justificativa), replaneja automaticamente se nada relevante aparecer, e envia o relatório final por Telegram.
+5. **Observabilidade** — todo o grafo do agente autônomo é traceado no LangSmith e pode ser inspecionado visualmente (nós, arestas, replanejamento) via LangGraph Studio.
+
+Estratégia de IA 100% gratuita: Groq no lugar de GPT-4o para extração e para o raciocínio do agente, mantendo o projeto sem custo de operação — o objetivo é portfólio, não produção paga.
