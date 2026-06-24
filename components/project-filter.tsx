@@ -9,7 +9,6 @@ const CATEGORIES = [
   "Inteligência Artificial",
   "Agentes & MCP",
   "Web",
-  "Automação",
   "MLOps & Data",
 ] as const;
 

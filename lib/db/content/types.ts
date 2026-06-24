@@ -28,7 +28,6 @@ export type ProjectFrontmatter = {
     | "Inteligência Artificial"
     | "Agentes & MCP"
     | "Web"
-    | "Automação"
     | "MLOps & Data";
   repoUrl?: string;
   liveUrl?: string;
