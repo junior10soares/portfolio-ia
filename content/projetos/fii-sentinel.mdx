@@ -1,0 +1,26 @@
+---
+title: "FII Sentinel"
+slug: "fii-sentinel"
+summary: "Investigador autônomo de Fundos Imobiliários: cruza o discurso do relatório gerencial com os números reais e aponta contradições — não só exibe métricas."
+stack: ["Next.js", "TypeScript", "Python", "LangGraph", "Gemini", "Supabase (pgvector)", "GitHub Actions"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/fii-sentinel"
+videoFile: "/videos/fii-sentinel.mp4"
+image: "/projects/fii-sentinel.png"
+status: "ativo"
+featured: true
+order: 8
+---
+
+O diferencial não é exibir indicadores de um FII — é cruzar o que a gestão *diz* no relatório gerencial com o que os números *mostram* e apontar a contradição. Exemplo real captado pelo próprio sistema: o relatório de um fundo afirmava que a vacância física "segue em trajetória de estabilização", enquanto a série histórica real mostrava alta consecutiva por 4 meses.
+
+**Como funciona:**
+
+1. **Coleta** — scraping responsável (robots.txt, rate limit, User-Agent identificável) dos indicadores públicos do fundo (DY, P/VP, liquidez).
+2. **Leitura do relatório** — PDF do relatório gerencial extraído, chunkado e indexado via embeddings multilíngues em pgvector (Supabase).
+3. **Detector de contradições** — um agente LLM (Gemini) compara o discurso do relatório com a série histórica real do indicador citado e aponta divergências com severidade (baixa/média/alta), nunca inventando números fora dos dados fornecidos.
+4. **Score determinístico** — 5 critérios ponderados (dividendos, ativos, transparência, saúde financeira, tendência); a nota de transparência cai proporcionalmente a cada contradição encontrada.
+5. **Timeline narrativa** — um segundo agente gera uma narrativa curta por marco temporal da série histórica, citando as contradições relevantes de cada período.
+6. **Orquestração** — todo o pipeline é um grafo LangGraph com retry exponencial em erro transitório, distinção entre erro definitivo (ex: ticker inexistente) e transitório, e a garantia de que uma falha de persistência no Supabase nunca se disfarça de sucesso (`status` e `persistido` são campos separados de propósito).
+
+Roda inteiramente em serviços com free tier permanente, sem servidor próprio ligado 24h: GitHub Actions (cron diário + disparo on-demand) para o compute pesado, Supabase Postgres+pgvector para persistência real, Gemini como LLM. O frontend (Next.js, App Router, View Transitions nativas do React 19.2) só lê do Supabase e dispara `workflow_dispatch` via API do GitHub quando um ticker novo é buscado.
