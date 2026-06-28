@@ -1,0 +1,31 @@
+---
+title: "Reserva"
+slug: "reserva"
+summary: "SaaS de gestão de pousadas com três agentes de IA reais: busca por linguagem natural, revenue management com tool-calling e comunicação automática com hóspede."
+stack: ["Next.js", "TypeScript", "Supabase", "Gemini API", "Tailwind CSS"]
+category: "Inteligência Artificial"
+repoUrl: "https://github.com/junior10soares/Reserva"
+videoFile: "/videos/reserva.mp4"
+image: "/projects/reserva.png"
+status: "ativo"
+featured: true
+order: 9
+---
+
+Pousadas pequenas e independentes hoje usam planilha ou sistemas sem nenhuma inteligência — ferramentas de revenue management (tipo as que redes grandes de hotel usam) são caras e voltadas pra quem tem dezenas de propriedades. O Reserva traz esse tipo de inteligência pra escala de um dono só, com agentes de IA que resolvem problemas reais de receita em vez de só conversar.
+
+**Três agentes, três jobs diferentes:**
+
+1. **Busca em linguagem natural** — o hóspede escreve "quero ficar de 10 a 15 de dezembro pra 2 pessoas" e um agente extrai datas e número de hóspedes. A disponibilidade em si nunca é decidida pela IA — é sempre uma consulta SQL determinística, a IA só interpreta a intenção.
+
+2. **Revenue management com tool-calling de verdade** — antes de sugerir um preço por dia, o agente consulta três ferramentas: histórico de ocupação por dia da semana, feriados nacionais (BrasilAPI) e como o dono decidiu sugestões anteriores (aceitou, rejeitou, editou) — pra calibrar o apetite real dele em vez de chutar. Toda sugestão passa por um clamp de segurança no código (0.5x–2.5x do preço-base) antes de persistir: é caminho de dinheiro, então a rede de segurança é código, não confiança no modelo.
+
+3. **Comunicação com hóspede** — gera rascunho de mensagem (pré-chegada, instruções de check-in, upsell, pós-estadia) ancorado em dados reais da reserva. Sem o dado real (endereço configurado, uma oportunidade de upsell que exista de verdade), o botão de gerar fica desabilitado — a IA nunca preenche a lacuna inventando.
+
+**Detalhes de arquitetura que valeram a pena registrar:**
+
+- **Escrita de reserva atômica**: toda reserva passa por uma function Postgres que faz lock + checagem de disponibilidade + insert numa única transação, eliminando overbooking em concorrência sem precisar de lock na aplicação.
+- **Limitação real da API do Gemini**: function calling e response JSON mode não podem ser combinados na mesma chamada — descoberto em produção, não na documentação. A solução foi transformar o "output estruturado" final em mais uma tool que o próprio agente chama pra entregar o resultado.
+- **Multi-tenant via Row Level Security**: cada tabela é isolada por `property_id`, testado deliberadamente tentando "furar" o isolamento entre dois donos antes de confiar na regra.
+
+Construído inteiramente com free tier — Supabase, Gemini, BrasilAPI, Pexels (pras fotos das pousadas de demonstração). Nenhuma dependência paga.
